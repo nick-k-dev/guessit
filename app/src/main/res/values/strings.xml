@@ -4,16 +4,18 @@
     <string name="main_num_round">Number of Rounds</string>
     <string name="main_start">Start</string>
     <string name="main_stats">Stats</string>
-    <string name="main_about">Can you beat the machine?!? Challenge the machine larning AI
+    <string name="main_about">Can you beat the machine?!? Challenge the machine learning AI
     to guess the image or word before it beats your puny human mind and takes over the world(okay
     probably not, but you at least wanna beat it for bragging rights no?)</string>
 
+    <string name="game_title">Guess It!</string>
     <string name="game_guess">Guess</string>
 
+    <string name="stats_title">Stats</string>
     <string name="stats_wins">Wins:</string>
     <string name="stats_losses">Losses:</string>
     <string name="stats_ties">Ties:</string>
     <string name="stats_avg_time">Avg. Time:</string>
     <string name="stats_games_played">Games Played:</string>
-    <string name="stats_home">Home:</string>
+    <string name="stats_home">Home</string>
 </resources>
