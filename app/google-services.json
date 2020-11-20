@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "180390038600",
+    "firebase_url": "https://quessit-cdffb.firebaseio.com",
+    "project_id": "quessit-cdffb",
+    "storage_bucket": "quessit-cdffb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180390038600:android:902b6e6e3bef863d4c1c7d",
+        "android_client_info": {
+          "package_name": "com.example.nksh.guessit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180390038600-v9vd0d0iaa6ovnb4r5o6bau6bdsv0k0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWaJhRwZAUm0JVt5j5nJdxTFuPM8jeUyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180390038600-v9vd0d0iaa6ovnb4r5o6bau6bdsv0k0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
