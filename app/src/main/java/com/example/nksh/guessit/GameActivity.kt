@@ -110,7 +110,7 @@ class GameActivity : AppCompatActivity() {
         // create dialog box
         val alert = dialogBuilder.create()
         // set title for alert dialog box
-        alert.setTitle(titleMessage)
+        alert.setTitle(getString(titleMessage))
         // show alert dialog
         alert.show()
     }
