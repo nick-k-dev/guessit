@@ -13,7 +13,7 @@
         android:id="@+id/winsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="132dp" />
     <TextView
         android:id="@+id/winsValue"
         android:layout_width="wrap_content"

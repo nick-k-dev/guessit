@@ -18,4 +18,12 @@
     <string name="stats_avg_time">Avg. Time:</string>
     <string name="stats_games_played">Games Played:</string>
     <string name="stats_home">Home</string>
+
+    <!-- Game finished strings-->
+    <string name="game_win">You have won against the AI!</string>
+    <string name="game_loss">You have lost against the AI!</string>
+    <string name="game_next">Proceed to next game?</string>
+    <string name="game_main">Quit to menu</string>
+    <string name="game_finished_all_rounds">That was your last round. Your score was:</string>
+
 </resources>

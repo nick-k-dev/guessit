@@ -4,9 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        var amountOfRounds = 0
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     fun onButtonClick(view: View) {
         when(view.id) {
             R.id.startButton -> {
+                amountOfRounds =  Integer.parseInt(findViewById<EditText>(R.id.roundsInput).text.toString())
                 println("start button pressed")
                 val intent = Intent(this, GameActivity::class.java).apply {}
                 startActivity(intent)
