@@ -70,11 +70,12 @@ class GameActivity : AppCompatActivity() {
     private fun createAlert(didWin : Boolean) {
         val dialogBuilder = AlertDialog.Builder(this)
 
-        var titleMessage = if(didWin){
-            getString(R.string.game_win)
+        var titleMessage = ""
+        if(didWin){
+            titleMessage = getString(R.string.game_win)
             wins++
         }else{
-            getString(R.string.game_loss)
+            titleMessage = getString(R.string.game_loss)
             losses++
         }
 
@@ -110,7 +111,7 @@ class GameActivity : AppCompatActivity() {
         // create dialog box
         val alert = dialogBuilder.create()
         // set title for alert dialog box
-        alert.setTitle(getString(titleMessage))
+        alert.setTitle(titleMessage)
         // show alert dialog
         alert.show()
     }
