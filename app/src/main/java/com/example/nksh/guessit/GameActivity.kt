@@ -10,21 +10,20 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import com.google.firebase.FirebaseApp
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import androidx.core.view.drawToBitmap
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabeling
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import java.util.*
-import kotlin.random.Random.Default.nextInt
 
 class GameActivity : AppCompatActivity() {
     companion object{
         var wins = 0
         var losses = 0
     }
-    private lateinit var storage: FirebaseStorage
     private var categories = arrayListOf<Int>(R.drawable.flower_animation)
-    private var imageRefs  = arrayListOf<StorageReference>()
 
+    private lateinit var imageView: ImageView
     private val handler = Handler()
     var timercount = 0
     var endTime = Calendar.getInstance()
@@ -32,7 +31,6 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-        FirebaseApp.initializeApp(this);
         endTime[Calendar.SECOND] += 15
         handler.post(object : Runnable {
             override fun run() {
@@ -48,11 +46,10 @@ class GameActivity : AppCompatActivity() {
         toolbarText.text = getString(R.string.game_title)
 
 
-        val img = findViewById<View>(R.id.gameImageView) as ImageView
-        img.setBackgroundResource(categories.random())
-        val frameAnimation = img.background as AnimationDrawable
+        imageView = findViewById<View>(R.id.gameImageView) as ImageView
+        imageView.setBackgroundResource(categories.random())
+        val frameAnimation = imageView.background as AnimationDrawable
         frameAnimation.start()
-
     }
 
     fun onGuessButtonClick(view: View) {
@@ -115,6 +112,23 @@ class GameActivity : AppCompatActivity() {
         // show alert dialog
         alert.show()
     }
+
+    private fun aiGuess() {
+        val image = InputImage.fromBitmap(imageView.drawToBitmap(), 0)
+        val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
+        labeler.process(image)
+            .addOnSuccessListener { labels ->
+                println("identified image")
+                for (label in labels) {
+                    println(label.text)
+                }
+            }
+            .addOnFailureListener{e->
+                println("failed to identify image")
+                println(e)
+            }
+    }
+
     private fun endEvent(currentdate: Calendar, eventdate: Calendar) {
         if (currentdate.time >= eventdate.time) {
             endTime[Calendar.SECOND] += 15
@@ -123,6 +137,7 @@ class GameActivity : AppCompatActivity() {
                 handler.removeMessages(0)
                 createAlert(false)
             }
+            aiGuess()
         }
     }
 }
