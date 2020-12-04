@@ -1,8 +1,8 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
-    <item android:drawable="@drawable/flower1" android:duration="15000" />
-    <item android:drawable="@drawable/flower2" android:duration="15000" />
-    <item android:drawable="@drawable/flower3" android:duration="15000" />
-    <item android:drawable="@drawable/flower4" android:duration="15000" />
-    <item android:drawable="@drawable/flower5" android:duration="15000" />
+    <item android:drawable="@drawable/flower_color_1" android:duration="15000" android:fromAlpha="1.0" android:toAlpha="0.1"/>
+    <item android:drawable="@drawable/flower_color_2" android:duration="15000" />
+    <item android:drawable="@drawable/flower_color_3" android:duration="15000" />
+    <item android:drawable="@drawable/flower_color_4" android:duration="15000" />
+    <item android:drawable="@drawable/flower_color_5" android:duration="15000" />
 </animation-list>
