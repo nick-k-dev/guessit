@@ -13,6 +13,7 @@ class StatsActivity : AppCompatActivity() {
     }
 
     override fun onStart() {
+        //TODO add settings for sound
         super.onStart()
         var toolbarText = findViewById<TextView>(R.id.toolbar_text)
         toolbarText.text = getString(R.string.stats_title)
