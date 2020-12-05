@@ -7,26 +7,9 @@
     android:background="@drawable/paper"
     tools:context=".StatsActivity">
 
-    <include layout="@layout/custom_toolbar" />
+    <include layout="@layout/custom_toolbar" /><![CDATA[
 
-    <TextView
-        android:id="@+id/winsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp" />
-    <TextView
-        android:id="@+id/winsValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="@string/stats_wins"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/winsValue"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     android:fontFamily="@font/annie_use_your_telescope"
         android:textColor="@color/black"
@@ -40,127 +23,224 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/lossesValue"
-        android:layout_width="wrap_content"
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ]]>
+
+    <LinearLayout
+        android:id="@+id/statsContainer"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="30sp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toEndOf="@+id/lossesLabel"
-        app:layout_constraintTop_toBottomOf="@+id/winsValue" />
-
-    <TextView
-        android:id="@+id/lossesLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="@string/stats_losses"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/lossesValue"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/winsLabel" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lossesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="@string/stats_losses"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/lossesValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="TextView"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/gamesPlayedLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="@string/stats_games_played"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/gamesPlayedValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="TextView"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/avgTimeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="@string/stats_avg_time"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/avgTimeValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="TextView"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/winsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="@string/stats_wins"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/winsValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="TextView"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tiesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="@string/stats_ties"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tiesValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:text="TextView"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/tiesValue"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/settingsContainer"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="30sp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="80dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toEndOf="@+id/tiesLabel"
-        app:layout_constraintTop_toBottomOf="@+id/lossesValue" />
-
-    <TextView
-        android:id="@+id/tiesLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="@string/stats_ties"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/tiesValue"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lossesLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/statsContainer">
 
-    <TextView
-        android:id="@+id/avgTimeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="@string/stats_avg_time"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/avgTimeValue"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tiesLabel" />
+        <LinearLayout
+            android:id="@+id/settingsMusicContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/avgTimeValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toEndOf="@+id/avgTimeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tiesValue" />
+            <Switch
+                android:id="@+id/switchMusic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:onClick="onSwitchToggle"
+                android:text="@string/stats_music"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
 
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/gamesPlayedValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toEndOf="@+id/gamesPlayedLabel"
-        app:layout_constraintTop_toBottomOf="@+id/avgTimeValue" />
+        <LinearLayout
+            android:id="@+id/settingsAudioContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/gamesPlayedLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="@string/stats_games_played"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/gamesPlayedValue"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avgTimeLabel" />
+            <Switch
+                android:id="@+id/switchSound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:onClick="onSwitchToggle"
+                android:text="@string/stats_sound"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/homeButton"

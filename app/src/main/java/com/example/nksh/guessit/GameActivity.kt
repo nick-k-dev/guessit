@@ -2,10 +2,10 @@ package com.example.nksh.guessit
 
 import android.content.DialogInterface
 import android.graphics.drawable.AnimationDrawable
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
@@ -22,13 +22,8 @@ import java.util.*
 
 
 class GameActivity : AppCompatActivity() {
+    var itemChangeSoundPlayer: MediaPlayer? = null
     companion object{
-        //TODO these fields need to be stored and retreived from shrared prefs or something similar
-        var wins = 0
-        var losses = 0
-        var ties = 0
-        var gamesPlayed = 0
-        var time = 0
         val displayLength = 15
         val numberOfFrames = 5
     }
@@ -36,7 +31,7 @@ class GameActivity : AppCompatActivity() {
         WON, LOST, TIED
     }
     enum class GAME_STATUS {
-        INPROGRESS, OVER
+        INPROGRESS, OVER, PAUSED
     }
     private var animationCategories = arrayListOf<Int>(
         R.drawable.flower_animation,
@@ -47,6 +42,7 @@ class GameActivity : AppCompatActivity() {
     private var aiGuessesIndex: Int = 0
     private var index: Int = 0
     private var status = GAME_STATUS.OVER
+    private var toastYOffset = -100
 
     private lateinit var imageView: ImageView
     private lateinit var userInput: EditText
@@ -60,18 +56,42 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-
+        itemChangeSoundPlayer = MediaPlayer.create(this, R.raw.popgun)
     }
 
     override fun onStart() {
         super.onStart()
         var toolbarText = findViewById<TextView>(R.id.toolbar_text)
         toolbarText.text = getString(R.string.game_title)
-
+        if(MainActivity.music && !MainActivity.musicPlayer?.isPlaying!!) {
+            MainActivity.musicPlayer?.start()
+        }
         //TODO put into external function where we call to fill the data into the lists
         answers.add(arrayListOf("flower"))
         answers.add(arrayListOf("house", "building", "cabin"))
         resetGame()
+    }
+
+    override fun onPause() {
+        // TODO write stats data to MainActivity Shared Prefs
+        status = GAME_STATUS.OVER
+        if(MainActivity.musicPlayer?.isPlaying!!) {
+            MainActivity.musicPlayer?.pause()
+        }
+        super.onPause()
+    }
+
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.quit_game_title)
+        builder.setMessage(R.string.quit_game_message)
+
+        builder.setPositiveButton(android.R.string.ok) { _, _ ->
+            //can place any go back home cancelling the event logic here
+            quitGame()
+        }
+        builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
+        builder.show()
     }
 
     fun resetGame() {
@@ -97,6 +117,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun quitGame() {
+        status = GAME_STATUS.OVER
         finish()
     }
 
@@ -107,15 +128,15 @@ class GameActivity : AppCompatActivity() {
         when (winStatus) {
             WIN_STATUS.WON -> {
                 titleMessage = getString(R.string.game_win)
-                wins++
+                MainActivity.wins++
             }
             WIN_STATUS.LOST -> {
                 titleMessage = getString(R.string.game_loss)
-                losses++
+                MainActivity.losses++
             }
             WIN_STATUS.TIED -> {
                 titleMessage = getString(R.string.game_tied)
-                ties++
+                MainActivity.ties++
             }
         }
         MainActivity.amountOfRounds--
@@ -157,7 +178,7 @@ class GameActivity : AppCompatActivity() {
                         println("Guessed ${label.text} ai wins")
                         val message = resources.getString(R.string.ai_win) + " " + label.text
                         val myToast = Toast.makeText(applicationContext, message, Toast.LENGTH_LONG)
-                        myToast.setGravity(Gravity.CENTER, 0, 0)
+                        myToast.setGravity(Gravity.CENTER, 0, toastYOffset)
                         myToast.show()
                         endRound(WIN_STATUS.LOST)
                         break;
@@ -171,29 +192,32 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun updateTimer() {
-        if (status == GAME_STATUS.INPROGRESS) {
+        if (status == GAME_STATUS.INPROGRESS && status != GAME_STATUS.PAUSED) {
             val currentTime = Calendar.getInstance()
             val diff = endTime.timeInMillis - currentTime.timeInMillis
             val seconds = (diff / 1000) % 60
             val timerText = findViewById<TextView>(R.id.timerTextView)
             timerText.text = seconds.toString()
+            //Have the ai guess 5 seconds before every frame switch. Can tweak based on desired
+            // difficulty of the game.
             if (seconds == 5L) {
                 println("5 seconds left")
                 aiGuess()
             }
+            //AI quip or saying what it's guess is. Can be tweaked for frequency of response
             if(seconds == 3L || seconds == 11L) {
                 if (aiGuesses.count() > 0 && aiGuessesIndex < aiGuesses.count()) {
                     val unsure = resources.getStringArray(R.array.ai_unsure).random()
                     val message = "$unsure ${aiGuesses[aiGuessesIndex]}"
                     val myToast = Toast.makeText(applicationContext, message, Toast.LENGTH_LONG)
-                    myToast.setGravity(Gravity.CENTER, 0, 0)
+                    myToast.setGravity(Gravity.CENTER, 0, toastYOffset)
                     myToast.show()
                     aiGuessesIndex++
                 }
                 else {
                     val quip = resources.getStringArray(R.array.ai_quips).random()
                     val myToast = Toast.makeText(applicationContext, quip, Toast.LENGTH_LONG)
-                    myToast.setGravity(Gravity.CENTER, 0, 0)
+                    myToast.setGravity(Gravity.CENTER, 0, toastYOffset)
                     myToast.show()
                 }
             }
@@ -209,7 +233,7 @@ class GameActivity : AppCompatActivity() {
         //TODO along with final animation showing and put button in to go back and quit
         if(MainActivity.amountOfRounds > 0) {
             // set message of alert dialog
-            dialogBuilder.setMessage("You have ${MainActivity.amountOfRounds} games left. \nYour score is $wins Wins to $losses Losses")
+            dialogBuilder.setMessage("You have ${MainActivity.amountOfRounds} games left. \nYour score is ${MainActivity.wins} Wins to ${MainActivity.losses} Losses")
                 // if the dialog is cancelable
                 .setCancelable(false)
                 // positive button text and action
@@ -226,7 +250,7 @@ class GameActivity : AppCompatActivity() {
         }
         else{
             // set message of alert dialog
-            dialogBuilder.setMessage(getString(R.string.game_finished_all_rounds) + wins.toString() + " Wins to " + losses.toString() + " Losses")
+            dialogBuilder.setMessage(getString(R.string.game_finished_all_rounds) + MainActivity.wins.toString() + " Wins to " + MainActivity.losses.toString() + " Losses")
                 // if the dialog is cancelable
                 .setCancelable(false)
                 // positive button text and action
@@ -246,6 +270,12 @@ class GameActivity : AppCompatActivity() {
 
     private fun endEvent(currentdate: Calendar, eventdate: Calendar) {
         if (status != GAME_STATUS.OVER && currentdate.time >= eventdate.time) {
+            if (itemChangeSoundPlayer?.isPlaying!!) {
+                itemChangeSoundPlayer?.stop()
+            }
+            if(MainActivity.sound) {
+                itemChangeSoundPlayer?.start()
+            }
             endTime[Calendar.SECOND] += displayLength
             currentImageFrame++
             if(currentImageFrame == numberOfFrames) {

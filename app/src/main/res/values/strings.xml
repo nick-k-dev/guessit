@@ -18,6 +18,8 @@
     <string name="stats_avg_time">Avg. Time:</string>
     <string name="stats_games_played">Games Played:</string>
     <string name="stats_home">Home</string>
+    <string name="stats_music">Music:</string>
+    <string name="stats_sound">Sound:</string>
 
     <!-- Game finished strings-->
     <string name="game_win">You have won against the AI!</string>
@@ -26,6 +28,8 @@
     <string name="game_next">Proceed to next game?</string>
     <string name="game_main">Quit to menu</string>
     <string name="game_finished_all_rounds">That was your last round. Your score was: </string>
+    <string name="quit_game_title">Quit game? </string>
+    <string name="quit_game_message">Are you sure you want to abandon your progress and quit? </string>
 
     <string-array name="ai_quips">
         <item>Huh... I have no idea</item>
@@ -56,4 +60,5 @@
     </string-array>
 
     <string name="ai_win">Victory! I\'ve got it! The word is </string>
+    <string name="ai_lose">You\'ve bested me this time.</string>
 </resources>
