@@ -11,6 +11,7 @@ import android.widget.TextView
 class MainActivity : AppCompatActivity() {
     companion object {
         var amountOfRounds = 0
+        var currentAmountOfRounds = 0
         var musicPlayer: MediaPlayer? = null
         //TODO these values are the source of truth and need to be saved and read from shared prefs for usage
         //************************
@@ -51,7 +52,8 @@ class MainActivity : AppCompatActivity() {
     fun onButtonClick(view: View) {
         when(view.id) {
             R.id.startButton -> {
-                amountOfRounds =  Integer.parseInt(findViewById<EditText>(R.id.roundsInput).text.toString())
+                currentAmountOfRounds =  Integer.parseInt(findViewById<EditText>(R.id.roundsInput).text.toString())
+                amountOfRounds = currentAmountOfRounds
                 println("start button pressed")
                 val intent = Intent(this, GameActivity::class.java).apply {}
                 startActivity(intent)

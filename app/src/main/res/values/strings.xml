@@ -10,6 +10,9 @@
 
     <string name="game_title">Guess It!</string>
     <string name="game_guess">Guess</string>
+    <string name="game_quit_button">Quit</string>
+    <string name="game_continue_button">Continue</string>
+    <string name="game_continue_message">Continue playing?</string>
 
     <string name="stats_title">Stats</string>
     <string name="stats_wins">Wins:</string>

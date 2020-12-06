@@ -1,6 +1,5 @@
 package com.example.nksh.guessit
 
-import android.content.DialogInterface
 import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -8,10 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.drawToBitmap
@@ -44,9 +40,13 @@ class GameActivity : AppCompatActivity() {
     private var status = GAME_STATUS.OVER
     private var toastYOffset = -100
 
+    private lateinit var inProgressContainer: LinearLayout
+    private lateinit var gameOverContainer: LinearLayout
+    private lateinit var gameOverMessage: TextView
     private lateinit var imageView: ImageView
     private lateinit var userInput: EditText
     private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
     private lateinit var frameAnimation: AnimationDrawable
     private val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
 
@@ -63,12 +63,25 @@ class GameActivity : AppCompatActivity() {
         super.onStart()
         var toolbarText = findViewById<TextView>(R.id.toolbar_text)
         toolbarText.text = getString(R.string.game_title)
+        inProgressContainer = findViewById(R.id.inProgressContainer)
+        inProgressContainer.visibility = View.VISIBLE
+        gameOverContainer = findViewById(R.id.gameOverContainer)
+        gameOverContainer.visibility = View.INVISIBLE
+        gameOverMessage = findViewById(R.id.gameOverMessage)
         if(MainActivity.music && !MainActivity.musicPlayer?.isPlaying!!) {
             MainActivity.musicPlayer?.start()
         }
         //TODO put into external function where we call to fill the data into the lists
         answers.add(arrayListOf("flower"))
         answers.add(arrayListOf("house", "building", "cabin"))
+
+        handler = Handler(Looper.getMainLooper())
+        runnable = object: Runnable {
+            override fun run() {
+                handler.postDelayed(this, 1000)
+                updateTimer()
+            }
+        }
         resetGame()
     }
 
@@ -95,18 +108,15 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun resetGame() {
+        inProgressContainer.visibility = View.VISIBLE
+        gameOverContainer.visibility = View.INVISIBLE
         aiGuesses = ArrayList()
-        handler = Handler(Looper.getMainLooper())
         status = GAME_STATUS.INPROGRESS
         currentImageFrame = 0
         endTime = Calendar.getInstance()
         endTime[Calendar.SECOND] += displayLength
-        handler.post(object : Runnable {
-            override fun run() {
-                handler.postDelayed(this, 1000)
-                updateTimer()
-            }
-        })
+        handler.removeCallbacks(runnable)
+        handler.post(runnable)
         userInput = findViewById(R.id.guessInput)
         imageView = findViewById<View>(R.id.gameImageView) as ImageView
         index = (0 until animationCategories.count()).random()
@@ -118,29 +128,61 @@ class GameActivity : AppCompatActivity() {
 
     fun quitGame() {
         status = GAME_STATUS.OVER
+        handler.removeCallbacks(runnable)
         finish()
     }
 
+    fun onButtonClick(view: View) {
+        when(view.id) {
+            R.id.buttonContinue -> {
+                println("Continuing game")
+                if (MainActivity.currentAmountOfRounds <= 0) {
+                    MainActivity.currentAmountOfRounds = MainActivity.amountOfRounds
+                }
+                resetGame()
+            }
+            R.id.buttonQuit -> {
+                println("Quitting game")
+                quitGame()
+            }
+        }
+    }
+
     fun endRound(winStatus: WIN_STATUS) {
+        // TODO if possible would be nice to have the final image displayed to show the user what it is in case it is guessed early
         status = GAME_STATUS.OVER
+        handler.removeCallbacks(runnable)
         frameAnimation.stop()
-        var titleMessage = ""
+        gameOverContainer.visibility = View.VISIBLE
+        inProgressContainer.visibility = View.INVISIBLE
+        var message = ""
         when (winStatus) {
             WIN_STATUS.WON -> {
-                titleMessage = getString(R.string.game_win)
+                message = getString(R.string.game_win)
                 MainActivity.wins++
             }
             WIN_STATUS.LOST -> {
-                titleMessage = getString(R.string.game_loss)
+                message = getString(R.string.game_loss)
                 MainActivity.losses++
             }
             WIN_STATUS.TIED -> {
-                titleMessage = getString(R.string.game_tied)
+                message = getString(R.string.game_tied)
                 MainActivity.ties++
             }
         }
-        MainActivity.amountOfRounds--
-        createAlertForUserInput(titleMessage)
+        message += " The correct options were "
+        for (answer in answers[index]) {
+            message += answer + ", "
+        }
+        message = message.substring(0, message.length - 2) + "."
+        MainActivity.currentAmountOfRounds--
+        if(MainActivity.currentAmountOfRounds > 0) {
+            message += " You have ${MainActivity.currentAmountOfRounds} games left. Your score is ${MainActivity.wins} Wins to ${MainActivity.losses} Losses"
+        }
+        else{
+            message += " " + getString(R.string.game_finished_all_rounds) + MainActivity.wins.toString() + " Wins to " + MainActivity.losses.toString() + " Losses"
+        }
+        gameOverMessage.text = message
     }
 
     fun checkAnswer(answer: String): Boolean {
@@ -161,6 +203,7 @@ class GameActivity : AppCompatActivity() {
                 println("You guessed correctly with $input")
                 endRound(WIN_STATUS.WON)
             }
+            //TODO create some sort of ui feedback for an incorrect guess
         }
     }
 
@@ -192,7 +235,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun updateTimer() {
-        if (status == GAME_STATUS.INPROGRESS && status != GAME_STATUS.PAUSED) {
+        if (status == GAME_STATUS.INPROGRESS) {
             val currentTime = Calendar.getInstance()
             val diff = endTime.timeInMillis - currentTime.timeInMillis
             val seconds = (diff / 1000) % 60
@@ -224,48 +267,6 @@ class GameActivity : AppCompatActivity() {
 
             endEvent(currentTime, endTime)
         }
-    }
-    private fun createAlertForUserInput(titleMessage: String) {
-        val dialogBuilder = AlertDialog.Builder(this)
-
-        //TODO replace alert functionality. Feels out of place and slows the game feel
-        //TODO replace with toasts and button to proceed to next round and on screen messages
-        //TODO along with final animation showing and put button in to go back and quit
-        if(MainActivity.amountOfRounds > 0) {
-            // set message of alert dialog
-            dialogBuilder.setMessage("You have ${MainActivity.amountOfRounds} games left. \nYour score is ${MainActivity.wins} Wins to ${MainActivity.losses} Losses")
-                // if the dialog is cancelable
-                .setCancelable(false)
-                // positive button text and action
-                .setPositiveButton(
-                    getString(R.string.game_next),
-                    DialogInterface.OnClickListener { _, _ ->
-                        resetGame()
-                    })
-                .setNegativeButton(
-                    getString(R.string.game_main),
-                    DialogInterface.OnClickListener { _, _ ->
-                        quitGame()
-                    })
-        }
-        else{
-            // set message of alert dialog
-            dialogBuilder.setMessage(getString(R.string.game_finished_all_rounds) + MainActivity.wins.toString() + " Wins to " + MainActivity.losses.toString() + " Losses")
-                // if the dialog is cancelable
-                .setCancelable(false)
-                // positive button text and action
-                .setNegativeButton(
-                    getString(R.string.game_main),
-                    DialogInterface.OnClickListener { _, _ ->
-                        quitGame()
-                    })
-        }
-        // create dialog box
-        val alert = dialogBuilder.create()
-        // set title for alert dialog box
-        alert.setTitle(titleMessage)
-        // show alert dialog
-        alert.show()
     }
 
     private fun endEvent(currentdate: Calendar, eventdate: Calendar) {

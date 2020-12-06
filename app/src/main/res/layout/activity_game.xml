@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/paper"
     tools:context=".GameActivity">
-    <include layout="@layout/custom_toolbar"/>
+
+    <include layout="@layout/custom_toolbar" />
 
     <ImageView
         android:id="@+id/gameImageView"
@@ -17,48 +18,100 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/timerTextView"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/inProgressContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:text="15"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="64sp"
-        app:layout_constraintBottom_toTopOf="@+id/guessInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/guessInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:hint="Enter Guess"
-        android:backgroundTint="#252525"
-        android:inputType="textPersonName"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/guessButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/guessButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#434343"
-        android:fontFamily="@font/annie_use_your_telescope"
-        android:onClick="onGuessButtonClick"
-        android:text="@string/game_guess"
-        android:textSize="22sp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameImageView">
+
+        <TextView
+            android:id="@+id/timerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="72dp"
+            android:fontFamily="@font/annie_use_your_telescope"
+            android:text="15"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="64sp" />
+
+        <EditText
+            android:id="@+id/guessInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#252525"
+            android:ems="10"
+            android:hint="Enter Guess"
+            android:inputType="textPersonName"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/guessButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#434343"
+            android:fontFamily="@font/annie_use_your_telescope"
+            android:onClick="onGuessButtonClick"
+            android:text="@string/game_guess"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gameOverContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameImageView">
+
+        <TextView
+            android:id="@+id/gameOverMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/annie_use_your_telescope"
+            android:text="@string/game_continue_message"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonQuit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#434343"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:onClick="onButtonClick"
+                android:text="@string/game_quit_button"
+                android:textSize="22sp" />
+
+            <Button
+                android:id="@+id/buttonContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#434343"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:onClick="onButtonClick"
+                android:text="@string/game_continue_button"
+                android:textSize="22sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
