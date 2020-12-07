@@ -10,6 +10,9 @@
 
     <string name="game_title">Guess It!</string>
     <string name="game_guess">Guess</string>
+    <string name="game_quit_button">Quit</string>
+    <string name="game_continue_button">Continue</string>
+    <string name="game_continue_message">Continue playing?</string>
 
     <string name="stats_title">Stats</string>
     <string name="stats_wins">Wins:</string>
@@ -18,12 +21,47 @@
     <string name="stats_avg_time">Avg. Time:</string>
     <string name="stats_games_played">Games Played:</string>
     <string name="stats_home">Home</string>
+    <string name="stats_music">Music:</string>
+    <string name="stats_sound">Sound:</string>
 
     <!-- Game finished strings-->
     <string name="game_win">You have won against the AI!</string>
     <string name="game_loss">You have lost against the AI!</string>
+    <string name="game_tied">You have tied against the AI!</string>
     <string name="game_next">Proceed to next game?</string>
     <string name="game_main">Quit to menu</string>
-    <string name="game_finished_all_rounds">That was your last round. Your score was:</string>
+    <string name="game_finished_all_rounds">That was your last round. Your score was: </string>
+    <string name="quit_game_title">Quit game? </string>
+    <string name="quit_game_message">Are you sure you want to abandon your progress and quit? </string>
 
+    <string-array name="ai_quips">
+        <item>Huh... I have no idea</item>
+        <item>Is this even a drawing???</item>
+        <item>I\'m so moved by the art I can\'t think of an answer...</item>
+        <item>Fire the artists this isn\'t fair!</item>
+        <item>If this was 1\'s and 0\'s I\'d totally beat you</item>
+        <item>I could create better art in ms paint</item>
+        <item>Picasso would be proud of this... if proud meant disappointed</item>
+        <item>The artists better not quit their day job</item>
+        <item>The imagery moves me to tears... of pain!</item>
+        <item>Such soothing hues... do I like it?</item>
+        <item>1,2,3,4, I\'ve no guesses anymore</item>
+    </string-array>
+
+    <string-array name="ai_unsure">
+        <item>I think it\'s \</item>
+        <item>No wait it\s </item>
+        <item>Could be </item>
+        <item>It\'s obviously </item>
+        <item>Hmm maybe </item>
+        <item>A bird? A Plane? No it\'s </item>
+        <item>Judging by the Kandinsky like colours it must be </item>
+        <item>Brilliant it\'s </item>
+        <item>I\'ve got it it\'s </item>
+        <item>I dunno how about </item>
+        <item>I\'ve spent millions of hours preparing for this moment to guess </item>
+    </string-array>
+
+    <string name="ai_win">Victory! I\'ve got it! The word is </string>
+    <string name="ai_lose">You\'ve bested me this time.</string>
 </resources>
