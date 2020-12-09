@@ -27,15 +27,11 @@ class GameActivity : AppCompatActivity() {
         WON, LOST, TIED
     }
     enum class GAME_STATUS {
-        INPROGRESS, OVER, PAUSED
+        INPROGRESS, OVER
     }
-    private var animationCategories = arrayListOf<Int>(
-        R.drawable.flower_animation,
-        R.drawable.house_animation
-    )
+    private lateinit var animationCategories: ArrayList<Int>
     private var answers = ArrayList<ArrayList<String>>()
     private lateinit var aiGuesses: ArrayList<String>
-    private var aiGuessesIndex: Int = 0
     private var index: Int = 0
     private var status = GAME_STATUS.OVER
     private var toastYOffset = -100
@@ -72,9 +68,22 @@ class GameActivity : AppCompatActivity() {
             MainActivity.musicPlayer?.start()
         }
         //TODO put into external function where we call to fill the data into the lists
+        animationCategories = arrayListOf<Int>(
+            R.drawable.flower_animation,
+            R.drawable.house_animation,
+            R.drawable.tv_animation,
+            R.drawable.headphones_animation,
+            R.drawable.phone_animation,
+            R.drawable.boat_animation,
+            R.drawable.sunglasses_animation
+        )
         answers.add(arrayListOf("flower"))
         answers.add(arrayListOf("house", "building", "cabin"))
-
+        answers.add(arrayListOf("tv", "television", "t.v."))
+        answers.add(arrayListOf("headphones", "earphones"))
+        answers.add(arrayListOf("smartphone", "cellphone", "phone", "telephone", "cell", "mobile phone"))
+        answers.add(arrayListOf("sailboat", "boat", "ship"))
+        answers.add(arrayListOf("sunglasses", "shades"))
         handler = Handler(Looper.getMainLooper())
         runnable = object: Runnable {
             override fun run() {
@@ -212,7 +221,6 @@ class GameActivity : AppCompatActivity() {
         labeler.process(image)
             .addOnSuccessListener { labels ->
                 println("identified image")
-                aiGuessesIndex = 0
                 aiGuesses = ArrayList()
                 for (label in labels) {
                     println(label.text)
@@ -249,13 +257,12 @@ class GameActivity : AppCompatActivity() {
             }
             //AI quip or saying what it's guess is. Can be tweaked for frequency of response
             if(seconds == 3L || seconds == 11L) {
-                if (aiGuesses.count() > 0 && aiGuessesIndex < aiGuesses.count()) {
+                if (aiGuesses.count() > 0) {
                     val unsure = resources.getStringArray(R.array.ai_unsure).random()
-                    val message = "$unsure ${aiGuesses[aiGuessesIndex]}"
+                    val message = "$unsure ${aiGuesses[(0 until aiGuesses.count()).random()]}"
                     val myToast = Toast.makeText(applicationContext, message, Toast.LENGTH_LONG)
                     myToast.setGravity(Gravity.CENTER, 0, toastYOffset)
                     myToast.show()
-                    aiGuessesIndex++
                 }
                 else {
                     val quip = resources.getStringArray(R.array.ai_quips).random()
