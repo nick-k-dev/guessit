@@ -34,7 +34,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var aiGuesses: ArrayList<String>
     private var index: Int = 0
     private var status = GAME_STATUS.OVER
-    private var toastYOffset = -100
+    private var toastYOffset = -10
 
     private lateinit var inProgressContainer: LinearLayout
     private lateinit var gameOverContainer: LinearLayout
@@ -75,7 +75,9 @@ class GameActivity : AppCompatActivity() {
             R.drawable.headphones_animation,
             R.drawable.phone_animation,
             R.drawable.boat_animation,
-            R.drawable.sunglasses_animation
+            R.drawable.sunglasses_animation,
+            R.drawable.lamp_animation,
+            R.drawable.bus_animation
         )
         answers.add(arrayListOf("flower"))
         answers.add(arrayListOf("house", "building", "cabin"))
@@ -84,6 +86,8 @@ class GameActivity : AppCompatActivity() {
         answers.add(arrayListOf("smartphone", "cellphone", "phone", "telephone", "cell", "mobile phone"))
         answers.add(arrayListOf("sailboat", "boat", "ship"))
         answers.add(arrayListOf("sunglasses", "shades"))
+        answers.add(arrayListOf("lamp", "light"))
+        answers.add(arrayListOf("schoolbus", "bus"))
         handler = Handler(Looper.getMainLooper())
         runnable = object: Runnable {
             override fun run() {
@@ -158,10 +162,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun endRound(winStatus: WIN_STATUS) {
-        // TODO if possible would be nice to have the final image displayed to show the user what it is in case it is guessed early
         status = GAME_STATUS.OVER
         handler.removeCallbacks(runnable)
         frameAnimation.stop()
+        imageView.setImageDrawable(frameAnimation.getFrame(frameAnimation.numberOfFrames - 1))
         gameOverContainer.visibility = View.VISIBLE
         inProgressContainer.visibility = View.INVISIBLE
         var message = ""
@@ -259,13 +263,13 @@ class GameActivity : AppCompatActivity() {
             if(seconds == 3L || seconds == 11L) {
                 if (aiGuesses.count() > 0) {
                     val unsure = resources.getStringArray(R.array.ai_unsure).random()
-                    val message = "$unsure ${aiGuesses[(0 until aiGuesses.count()).random()]}"
+                    val message = "AI: $unsure ${aiGuesses[(0 until aiGuesses.count()).random()]}"
                     val myToast = Toast.makeText(applicationContext, message, Toast.LENGTH_LONG)
                     myToast.setGravity(Gravity.CENTER, 0, toastYOffset)
                     myToast.show()
                 }
                 else {
-                    val quip = resources.getStringArray(R.array.ai_quips).random()
+                    val quip = "AI: ${resources.getStringArray(R.array.ai_quips).random()}"
                     val myToast = Toast.makeText(applicationContext, quip, Toast.LENGTH_LONG)
                     myToast.setGravity(Gravity.CENTER, 0, toastYOffset)
                     myToast.show()
