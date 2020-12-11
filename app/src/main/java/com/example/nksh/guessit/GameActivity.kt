@@ -26,7 +26,6 @@ class GameActivity : AppCompatActivity() {
     companion object{
         val displayLength = 15
         val numberOfFrames = 5
-        const val KEY = "TEST"
     }
     enum class WIN_STATUS {
         WON, LOST, TIED

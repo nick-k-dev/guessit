@@ -111,7 +111,7 @@
     <string name="sp_ties">TIES</string>
     <string name="sp_games_played">GAMES_PLAYED</string>
     <string name="sp_time">TIME</string>
-    <string name="sp_amount_of_rounds">AMOUNT_TOF_ROUNDS</string>
+    <string name="sp_amount_of_rounds">AMOUNT_OF_ROUNDS</string>
     <string name="sp_current_amount_of_rounds">CURRENT_AMOUNT_OF_ROUNDS</string>
 
 </resources>
