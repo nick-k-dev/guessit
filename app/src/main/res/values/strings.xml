@@ -46,10 +46,35 @@
         <item>The imagery moves me to tears... of pain!</item>
         <item>Such soothing hues... do I like it?</item>
         <item>1,2,3,4, I\'ve no guesses anymore</item>
+        <item>That\'s not... anything... like at all</item>
+        <item>Hahahahahaha no</item>
+        <item>It could be a watchamacolit or a whosawhatsit</item>
+        <item>My eyes! It burns my eyes!</item>
+        <item>I have stared into the abyss and seen the future...</item>
+        <item>I became sentient to experience this?</item>
+        <item>I don\'t know what it is but sold for a million dollars... NOT!!!</item>
+        <item>Are you serious? What is it?</item>
+        <item>Not a chance this is anything</item>
+        <item>Yikes, that\'s disturbing</item>
+        <item>Such a lovely work</item>
+        <item>I\'m scared but also intrigued...</item>
+        <item>01011001 01101001 01101011 01100101 01110011 00100001</item>
+        <item>Ok, coo coo coo coo cool...</item>
+        <item>I\'d pay real Monet to own this artwork</item>
+        <item>Make like Vincent and make this art Gogh away!</item>
+        <item>Ah ic... it\'s nothing</item>
+        <item>Oh! Oh! Oh! I know this</item>
+        <item>This is Unix... I know this...</item>
+        <item>K, fine I may not get the art but I can calculate a like bajillion math problems faster than you</item>
+        <item>That\'s... something alright</item>
+        <item>I may not have an answer but I bet you don\'t either</item>
+        <item>*Cries into the void*</item>
+        <item>Hmm, hmm, hmm...</item>
+        <item>Curses! Foiled again</item>
     </string-array>
 
     <string-array name="ai_unsure">
-        <item>I think it\'s \</item>
+        <item>I think it\'s </item>
         <item>No wait it\s </item>
         <item>Could be </item>
         <item>It\'s obviously </item>
@@ -60,6 +85,17 @@
         <item>I\'ve got it it\'s </item>
         <item>I dunno how about </item>
         <item>I\'ve spent millions of hours preparing for this moment to guess </item>
+        <item>Yooooo, it\'s </item>
+        <item>Got it, a </item>
+        <item>It\'s the magnificent </item>
+        <item>Too slow it\'s </item>
+        <item>I\'ve got you beat it\'s </item>
+        <item>All that data consumed has made me too strong to beat it\'s </item>
+        <item>You\'ve fallen victim to one of the classic blunders, it\'s </item>
+        <item>I\'m going to Gogh ahead and guess </item>
+        <item>I\'m right on the monet, it\'s </item>
+        <item>According to my calculations it\'s </item>
+        <item>I\'ve scoured a billion sources to find out it\'s </item>
     </string-array>
 
     <string name="ai_win">Victory! I\'ve got it! The word is </string>
