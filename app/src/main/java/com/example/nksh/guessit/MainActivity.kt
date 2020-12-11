@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
         var amountOfRounds = 0
         var currentAmountOfRounds = 0
         var musicPlayer: MediaPlayer? = null
-        //TODO these values are the source of truth and need to be saved and read from shared prefs for usage
         //************************
         var sound: Boolean = true
         var music: Boolean = true
@@ -41,8 +40,12 @@ class MainActivity : AppCompatActivity() {
             musicPlayer?.start()
         }
     }
-
+    override fun onResume() {
+        loadSharedPrefs(this::getSharedPreferences,this::getText)
+        super.onResume()
+    }
     override fun onPause() {
+        setSharedPrefs(this::getSharedPreferences,this::getText)
         if(musicPlayer?.isPlaying!!) {
             musicPlayer?.pause()
         }

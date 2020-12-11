@@ -47,8 +47,12 @@ class StatsActivity : AppCompatActivity() {
 
 
     }
-
+    override fun onResume() {
+        loadSharedPrefs(this::getSharedPreferences,this::getText)
+        super.onResume()
+    }
     override fun onPause() {
+        setSharedPrefs(this::getSharedPreferences,this::getText)
         if(MainActivity.musicPlayer?.isPlaying!!) {
             MainActivity.musicPlayer?.pause()
         }
