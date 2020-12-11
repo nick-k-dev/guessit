@@ -100,4 +100,18 @@
 
     <string name="ai_win">Victory! I\'ve got it! The word is </string>
     <string name="ai_lose">You\'ve bested me this time.</string>
+
+
+    <!-- Shared Prefs -->
+    <string name="sp_key">GUESSIT</string>
+    <string name="sp_sound">SOUND</string>
+    <string name="sp_music">MUSIC</string>
+    <string name="sp_wins">WINS</string>
+    <string name="sp_losses">LOSSES</string>
+    <string name="sp_ties">TIES</string>
+    <string name="sp_games_played">GAMES_PLAYED</string>
+    <string name="sp_time">TIME</string>
+    <string name="sp_amount_of_rounds">AMOUNT_OF_ROUNDS</string>
+    <string name="sp_current_amount_of_rounds">CURRENT_AMOUNT_OF_ROUNDS</string>
+
 </resources>

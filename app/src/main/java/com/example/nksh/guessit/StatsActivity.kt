@@ -33,7 +33,6 @@ class StatsActivity : AppCompatActivity() {
         super.onStart()
         var toolbarText = findViewById<TextView>(R.id.toolbar_text)
         toolbarText.text = getString(R.string.stats_title)
-        // TODO should be getting music and sound values from shared prefs before setting
         switchMusic.isChecked = MainActivity.music
         switchSound.isChecked = MainActivity.sound
         lossesValue.text = MainActivity.losses.toString()
@@ -47,8 +46,12 @@ class StatsActivity : AppCompatActivity() {
 
 
     }
-
+    override fun onResume() {
+        loadSharedPrefs(this::getSharedPreferences,this::getText)
+        super.onResume()
+    }
     override fun onPause() {
+        setSharedPrefs(this::getSharedPreferences,this::getText)
         if(MainActivity.musicPlayer?.isPlaying!!) {
             MainActivity.musicPlayer?.pause()
         }

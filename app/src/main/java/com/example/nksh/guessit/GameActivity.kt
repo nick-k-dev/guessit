@@ -1,7 +1,11 @@
 package com.example.nksh.guessit
 
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
+import android.media.session.MediaController
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -67,27 +71,8 @@ class GameActivity : AppCompatActivity() {
         if(MainActivity.music && !MainActivity.musicPlayer?.isPlaying!!) {
             MainActivity.musicPlayer?.start()
         }
-        //TODO put into external function where we call to fill the data into the lists
-        animationCategories = arrayListOf<Int>(
-            R.drawable.flower_animation,
-            R.drawable.house_animation,
-            R.drawable.tv_animation,
-            R.drawable.headphones_animation,
-            R.drawable.phone_animation,
-            R.drawable.boat_animation,
-            R.drawable.sunglasses_animation,
-            R.drawable.lamp_animation,
-            R.drawable.bus_animation
-        )
-        answers.add(arrayListOf("flower"))
-        answers.add(arrayListOf("house", "building", "cabin"))
-        answers.add(arrayListOf("tv", "television", "t.v."))
-        answers.add(arrayListOf("headphones", "earphones"))
-        answers.add(arrayListOf("smartphone", "cellphone", "phone", "telephone", "cell", "mobile phone"))
-        answers.add(arrayListOf("sailboat", "boat", "ship"))
-        answers.add(arrayListOf("sunglasses", "shades"))
-        answers.add(arrayListOf("lamp", "light"))
-        answers.add(arrayListOf("schoolbus", "bus"))
+        animationCategories = GetCategories()
+        answers = GetAnswers()
         handler = Handler(Looper.getMainLooper())
         runnable = object: Runnable {
             override fun run() {
@@ -99,14 +84,17 @@ class GameActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        // TODO write stats data to MainActivity Shared Prefs
+        setSharedPrefs(this::getSharedPreferences,this::getText)
         status = GAME_STATUS.OVER
         if(MainActivity.musicPlayer?.isPlaying!!) {
             MainActivity.musicPlayer?.pause()
         }
         super.onPause()
     }
-
+    override fun onResume() {
+        loadSharedPrefs(this::getSharedPreferences,this::getText)
+        super.onResume()
+    }
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.quit_game_title)
@@ -210,14 +198,18 @@ class GameActivity : AppCompatActivity() {
         println("guess button clicked")
         if (status != GAME_STATUS.OVER) {
             val input = userInput.text.toString().toLowerCase()
-            userInput.text.clear()
             println(input)
             if(checkAnswer(input.toLowerCase())) {
                 println("You guessed correctly with $input")
                 endRound(WIN_STATUS.WON)
             }
-            //TODO create some sort of ui feedback for an incorrect guess
+            else {
+                userInput.setTextColor(Color.parseColor("#FF0000"))
+            }
         }
+    }
+    fun onSelectInput(view:View){
+        userInput.setTextColor(Color.parseColor("#000000"))
     }
 
     private fun aiGuess() {
