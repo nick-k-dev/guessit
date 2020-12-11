@@ -33,7 +33,6 @@ class StatsActivity : AppCompatActivity() {
         super.onStart()
         var toolbarText = findViewById<TextView>(R.id.toolbar_text)
         toolbarText.text = getString(R.string.stats_title)
-        // TODO should be getting music and sound values from shared prefs before setting
         switchMusic.isChecked = MainActivity.music
         switchSound.isChecked = MainActivity.sound
         lossesValue.text = MainActivity.losses.toString()

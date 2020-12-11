@@ -72,6 +72,7 @@ class GameActivity : AppCompatActivity() {
         if(MainActivity.music && !MainActivity.musicPlayer?.isPlaying!!) {
             MainActivity.musicPlayer?.start()
         }
+        animationCategories = GetCategories()
         answers = GetAnswers()
         handler = Handler(Looper.getMainLooper())
         runnable = object: Runnable {
