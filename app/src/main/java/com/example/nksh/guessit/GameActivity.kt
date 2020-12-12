@@ -68,9 +68,6 @@ class GameActivity : AppCompatActivity() {
         gameOverContainer = findViewById(R.id.gameOverContainer)
         gameOverContainer.visibility = View.INVISIBLE
         gameOverMessage = findViewById(R.id.gameOverMessage)
-        if(MainActivity.music && !MainActivity.musicPlayer?.isPlaying!!) {
-            MainActivity.musicPlayer?.start()
-        }
         animationCategories = GetCategories()
         answers = GetAnswers()
         handler = Handler(Looper.getMainLooper())
@@ -93,6 +90,9 @@ class GameActivity : AppCompatActivity() {
     }
     override fun onResume() {
         loadSharedPrefs(this::getSharedPreferences,this::getText)
+        if(MainActivity.music && !MainActivity.musicPlayer?.isPlaying!!) {
+            MainActivity.musicPlayer?.start()
+        }
         super.onResume()
     }
     override fun onBackPressed() {
@@ -121,7 +121,7 @@ class GameActivity : AppCompatActivity() {
         userInput = findViewById(R.id.guessInput)
         imageView = findViewById<View>(R.id.gameImageView) as ImageView
         index = (0 until animationCategories.count()).random()
-        println("random num is $index")
+        imageView.setImageDrawable(null)
         imageView.setBackgroundResource(animationCategories[index])
         frameAnimation = imageView.background as AnimationDrawable
         frameAnimation.start()
@@ -136,14 +136,12 @@ class GameActivity : AppCompatActivity() {
     fun onButtonClick(view: View) {
         when(view.id) {
             R.id.buttonContinue -> {
-                println("Continuing game")
                 if (MainActivity.currentAmountOfRounds <= 0) {
                     MainActivity.currentAmountOfRounds = MainActivity.amountOfRounds
                 }
                 resetGame()
             }
             R.id.buttonQuit -> {
-                println("Quitting game")
                 quitGame()
             }
         }
@@ -195,12 +193,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun onGuessButtonClick(view: View) {
-        println("guess button clicked")
         if (status != GAME_STATUS.OVER) {
             val input = userInput.text.toString().toLowerCase()
-            println(input)
             if(checkAnswer(input.toLowerCase())) {
-                println("You guessed correctly with $input")
                 endRound(WIN_STATUS.WON)
             }
             else {
@@ -209,6 +204,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
     fun onSelectInput(view:View){
+        userInput.text.clear()
         userInput.setTextColor(Color.parseColor("#000000"))
     }
 
@@ -216,13 +212,10 @@ class GameActivity : AppCompatActivity() {
         val image = InputImage.fromBitmap(imageView.drawToBitmap(), 0)
         labeler.process(image)
             .addOnSuccessListener { labels ->
-                println("identified image")
                 aiGuesses = ArrayList()
                 for (label in labels) {
-                    println(label.text)
                     aiGuesses.add(label.text)
                     if(checkAnswer(label.text.toLowerCase())) {
-                        println("Guessed ${label.text} ai wins")
                         val message = resources.getString(R.string.ai_win) + " " + label.text
                         val myToast = Toast.makeText(applicationContext, message, Toast.LENGTH_LONG)
                         myToast.setGravity(Gravity.CENTER, 0, toastYOffset)
@@ -233,7 +226,6 @@ class GameActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener{ e->
-                println("failed to identify image")
                 println(e)
             }
     }
@@ -248,7 +240,6 @@ class GameActivity : AppCompatActivity() {
             //Have the ai guess 5 seconds before every frame switch. Can tweak based on desired
             // difficulty of the game.
             if (seconds == 5L) {
-                println("5 seconds left")
                 aiGuess()
             }
             //AI quip or saying what it's guess is. Can be tweaked for frequency of response

@@ -40,14 +40,12 @@ class StatsActivity : AppCompatActivity() {
         averageTimeValue.text = MainActivity.time.toString()
         winsValue.text = MainActivity.wins.toString()
         tiesValue.text = MainActivity.ties.toString()
-        if(MainActivity.music && !MainActivity.musicPlayer?.isPlaying!!) {
-            MainActivity.musicPlayer?.start()
-        }
-
-
     }
     override fun onResume() {
         loadSharedPrefs(this::getSharedPreferences,this::getText)
+        if(MainActivity.music && !MainActivity.musicPlayer?.isPlaying!!) {
+            MainActivity.musicPlayer?.start()
+        }
         super.onResume()
     }
     override fun onPause() {
@@ -59,7 +57,6 @@ class StatsActivity : AppCompatActivity() {
     }
 
     fun onHomeButtonClick(view: View) {
-        println("home button pressed")
         val intent = Intent(this, MainActivity::class.java).apply {}
         startActivity(intent)
     }
@@ -67,7 +64,6 @@ class StatsActivity : AppCompatActivity() {
     fun onSwitchToggle(view: View) {
         when(view.id) {
             R.id.switchMusic -> {
-                println("toggling music")
                 MainActivity.music = switchMusic.isChecked
                 if(MainActivity.music) {
                     if(!MainActivity.musicPlayer?.isPlaying!!) {
@@ -81,7 +77,6 @@ class StatsActivity : AppCompatActivity() {
                 }
             }
             R.id.switchSound -> {
-                println("toggling sound")
                 MainActivity.sound = switchSound.isChecked
             }
         }

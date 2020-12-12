@@ -36,12 +36,12 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         var toolbarText = findViewById<TextView>(R.id.toolbar_text)
         toolbarText.text = getString(R.string.app_name)
-        if(music && !musicPlayer?.isPlaying!!) {
-            musicPlayer?.start()
-        }
     }
     override fun onResume() {
         loadSharedPrefs(this::getSharedPreferences,this::getText)
+        if(music && !musicPlayer?.isPlaying!!) {
+            musicPlayer?.start()
+        }
         super.onResume()
     }
     override fun onPause() {
@@ -57,12 +57,10 @@ class MainActivity : AppCompatActivity() {
             R.id.startButton -> {
                 currentAmountOfRounds =  Integer.parseInt(findViewById<EditText>(R.id.roundsInput).text.toString())
                 amountOfRounds = currentAmountOfRounds
-                println("start button pressed")
                 val intent = Intent(this, GameActivity::class.java).apply {}
                 startActivity(intent)
             }
             R.id.statsButton -> {
-                println("stats button pressed")
                 val intent = Intent(this, StatsActivity::class.java).apply {}
                 startActivity(intent)
             }
