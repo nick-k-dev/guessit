@@ -7,6 +7,11 @@ import android.view.View
 import android.widget.Switch
 import android.widget.TextView
 
+/*
+* Project: Guess It!
+* Authors: Nick Komarnicki and Steven Harrison
+* Date: December 11, 2020
+* */
 class StatsActivity : AppCompatActivity() {
 
     private lateinit var switchMusic: Switch

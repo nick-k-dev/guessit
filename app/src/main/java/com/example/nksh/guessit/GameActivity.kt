@@ -20,7 +20,11 @@ import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import java.util.*
 
-
+/*
+* Project: Guess It!
+* Authors: Nick Komarnicki and Steven Harrison
+* Date: December 11, 2020
+* */
 class GameActivity : AppCompatActivity() {
     var itemChangeSoundPlayer: MediaPlayer? = null
     companion object{

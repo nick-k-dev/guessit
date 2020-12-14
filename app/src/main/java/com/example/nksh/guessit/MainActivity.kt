@@ -8,12 +8,16 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 
+/*
+* Project: Guess It!
+* Authors: Nick Komarnicki and Steven Harrison
+* Date: December 11, 2020
+* */
 class MainActivity : AppCompatActivity() {
     companion object {
         var amountOfRounds = 0
         var currentAmountOfRounds = 0
         var musicPlayer: MediaPlayer? = null
-        //************************
         var sound: Boolean = true
         var music: Boolean = true
         var wins = 0
@@ -21,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         var ties = 0
         var gamesPlayed = 0
         var time = 0
-        //************************
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
